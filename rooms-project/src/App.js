@@ -1,26 +1,18 @@
-import logo from "./logo.svg";
 import "./App.css";
 import api from "./api/axiosConfig";
 import { useState, useEffect } from "react";
+import Filter from './components/Filter';
+import RoomList from './components/RoomList';
+
 function App() {
-  const [rooms, setRooms] = useState();
+  const [rooms, setRooms] = useState([]);
+  const [filter, setFilter] = useState('');
 
   const getRooms = async () => {
-    const settings = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
     try {
-      const fetchResponse = await fetch(
-        `http://localhost:8080/api/v1/rooms`,
-        settings
-      );
-      const data = await fetchResponse.json();
-      console.log(data);
-      setRooms(data);
+      const response = await api.get("/api/v1/rooms");
+      console.log(response.data);
+      setRooms(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -29,9 +21,23 @@ function App() {
   useEffect(() => {
     getRooms();
   }, []);
+
+  // Filtere die Räume basierend auf dem Bundesland
+  const filteredRooms = rooms.filter((room) =>
+    room.state.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <header className="App-header">
+        <h1>WG-Zimmerbörse</h1>
+      </header>
+      <Filter filter={filter} setFilter={setFilter} />
+      {filteredRooms && filteredRooms.length > 0 ? (
+        <RoomList rooms={filteredRooms} />
+      ) : (
+        <p>Keine Zimmer verfügbar.</p>
+      )}
     </div>
   );
 }
