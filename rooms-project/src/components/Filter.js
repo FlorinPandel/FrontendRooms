@@ -1,6 +1,6 @@
 // components/Filter.js
-import React, { useState, useEffect } from 'react';
-import { Range, getTrackBackground } from 'react-range';
+import React, { useState, useEffect } from "react";
+import { Range, getTrackBackground } from "react-range";
 
 function Filter({ filters, setFilters }) {
   const MIN_SIZE = 0;
@@ -45,14 +45,19 @@ function Filter({ filters, setFilters }) {
   }, [sizeRange, rentRange]);
 
   return (
-    <div className="m-2 max-w-screen-md">
+    <div className="m-2 max-w-screen-xl">
       <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
         <h2 className="text-stone-700 text-xl font-bold">Filter anwenden</h2>
-        <p className="mt-1 text-sm">Verwende Filter, um die Suche zu verfeinern</p>
+        <p className="mt-1 text-sm">
+          Verwende Filter, um die Suche zu verfeinern
+        </p>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {/* Stadt */}
           <div className="flex flex-col">
-            <label htmlFor="city" className="text-stone-600 text-sm font-medium">
+            <label
+              htmlFor="city"
+              className="text-stone-600 text-sm font-medium"
+            >
               Stadt
             </label>
             <input
@@ -66,7 +71,7 @@ function Filter({ filters, setFilters }) {
           </div>
 
           {/* Wohnfläche Range Slider */}
-          <div className="flex flex-col col-span-2">
+          <div className="flex flex-col col-span-2 gap-x-4">
             <label className="text-stone-600 text-sm font-medium">
               Wohnfläche (m²): {sizeRange[0]} - {sizeRange[1]}
             </label>
@@ -82,15 +87,15 @@ function Filter({ filters, setFilters }) {
                     {...props}
                     style={{
                       ...props.style,
-                      height: '6px',
-                      width: '100%',
+                      height: "6px",
+                      width: "100%",
                       background: getTrackBackground({
                         values: sizeRange,
-                        colors: ['#ccc', '#548BF4', '#ccc'],
+                        colors: ["#ccc", "#548BF4", "#ccc"],
                         min: MIN_SIZE,
                         max: MAX_SIZE,
                       }),
-                      borderRadius: '4px',
+                      borderRadius: "4px",
                     }}
                   >
                     {children}
@@ -101,22 +106,22 @@ function Filter({ filters, setFilters }) {
                     {...props}
                     style={{
                       ...props.style,
-                      height: '16px',
-                      width: '16px',
-                      borderRadius: '50%',
-                      backgroundColor: '#548BF4',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      boxShadow: '0px 2px 6px #AAA',
+                      height: "16px",
+                      width: "16px",
+                      borderRadius: "50%",
+                      backgroundColor: "#548BF4",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "0px 2px 6px #AAA",
                     }}
                   >
                     <div
                       style={{
-                        height: '6px',
-                        width: '6px',
-                        backgroundColor: isDragged ? '#fff' : '#ccc',
-                        borderRadius: '50%',
+                        height: "6px",
+                        width: "6px",
+                        backgroundColor: isDragged ? "#fff" : "#ccc",
+                        borderRadius: "50%",
                       }}
                     />
                   </div>
@@ -126,7 +131,7 @@ function Filter({ filters, setFilters }) {
           </div>
 
           {/* Miete Range Slider */}
-          <div className="flex flex-col col-span-2">
+          <div className="flex flex-col col-span-2 gap-x-4">
             <label className="text-stone-600 text-sm font-medium">
               Miete (€): {rentRange[0]} - {rentRange[1]}
             </label>
@@ -142,15 +147,15 @@ function Filter({ filters, setFilters }) {
                     {...props}
                     style={{
                       ...props.style,
-                      height: '6px',
-                      width: '100%',
+                      height: "6px",
+                      width: "100%",
                       background: getTrackBackground({
                         values: rentRange,
-                        colors: ['#ccc', '#548BF4', '#ccc'],
+                        colors: ["#ccc", "#548BF4", "#ccc"],
                         min: MIN_RENT,
                         max: MAX_RENT,
                       }),
-                      borderRadius: '4px',
+                      borderRadius: "4px",
                     }}
                   >
                     {children}
@@ -161,22 +166,22 @@ function Filter({ filters, setFilters }) {
                     {...props}
                     style={{
                       ...props.style,
-                      height: '16px',
-                      width: '16px',
-                      borderRadius: '50%',
-                      backgroundColor: '#548BF4',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      boxShadow: '0px 2px 6px #AAA',
+                      height: "16px",
+                      width: "16px",
+                      borderRadius: "50%",
+                      backgroundColor: "#548BF4",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "0px 2px 6px #AAA",
                     }}
                   >
                     <div
                       style={{
-                        height: '6px',
-                        width: '6px',
-                        backgroundColor: isDragged ? '#fff' : '#ccc',
-                        borderRadius: '50%',
+                        height: "6px",
+                        width: "6px",
+                        backgroundColor: isDragged ? "#fff" : "#ccc",
+                        borderRadius: "50%",
                       }}
                     />
                   </div>
@@ -187,7 +192,10 @@ function Filter({ filters, setFilters }) {
 
           {/* Verfügbarkeit */}
           <div className="flex flex-col">
-            <label htmlFor="availability" className="text-stone-600 text-sm font-medium">
+            <label
+              htmlFor="availability"
+              className="text-stone-600 text-sm font-medium"
+            >
               Verfügbarkeit
             </label>
 
