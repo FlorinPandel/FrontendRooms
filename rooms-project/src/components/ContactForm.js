@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import api from "../api/axiosConfig";
 
 function ContactForm({ room, onClose }) {
   const [formData, setFormData] = useState({
@@ -6,21 +8,56 @@ function ContactForm({ room, onClose }) {
     email: "",
     message: "",
   });
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData, [name]: value});
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Kontaktformular abgeschickt:", formData, "Bezüglich:", room);
-    onClose();
+    if (!room || !room.roomId) {
+      setFeedbackMessage("Kein gültiges Zimmer ausgewählt.");
+      return;
+    }
+
+    const payload = {
+      roomId: room.roomId,
+      senderName: formData.name,
+      senderEmail: formData.email,
+      content: formData.message,
+    };
+
+    try {
+      setIsSending(true);
+      setFeedbackMessage("");
+
+      const response = await api.post("/api/v1/messages", payload);
+      setFeedbackMessage("Nachricht erfolgreich gesendet!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setFeedbackMessage(`Fehler: ${error.response.data}`);
+      } else {
+        setFeedbackMessage("Es ist ein Fehler aufgetreten.");
+      }
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
     <div className="mt-4 border-t pt-4">
       <h3 className="mb-2 text-lg font-semibold">Kontaktformular</h3>
+
+      {feedbackMessage && (
+        <div className="mb-2 rounded border border-blue-200 bg-blue-50 p-2 text-blue-800">
+          {feedbackMessage}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label className="block font-medium" htmlFor="name">
@@ -60,6 +97,7 @@ function ContactForm({ room, onClose }) {
             className="mt-1 w-full rounded border border-gray-300 p-2"
             name="message"
             id="message"
+            rows={4}
             value={formData.message}
             onChange={handleChange}
             required
@@ -69,9 +107,10 @@ function ContactForm({ room, onClose }) {
         <div className="mt-4 flex space-x-4">
           <button
             type="submit"
-            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            disabled={isSending}
+            className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-blue-300"
           >
-            Absenden
+            {isSending ? "Wird gesendet..." : "Absenden"}
           </button>
           <button
             type="button"

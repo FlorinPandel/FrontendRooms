@@ -4,12 +4,13 @@ import ContactForm from "./ContactForm";
 export default function RoomDetailsModal({ room, onClose }) {
   const [showContactForm, setShowContactForm] = useState(false);
 
-  // Falls room kein image-Feld hat, nutzen Sie ein Platzhalter-Bild.
-  const imageUrl = room.imageUrl || "https://images.unsplash.com/photo-1570797197190-8e003a00c846?ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80";
+  const imageUrl =
+    room.imageUrl ||
+    "https://images.unsplash.com/photo-1570797197190-8e003a00c846?ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative max-w-3xl w-full bg-white rounded-lg shadow-lg p-6">
+      <div className="relative w-full max-w-3xl max-h-[90%] overflow-y-auto bg-white rounded-lg shadow-lg p-6">
         <img
           src={imageUrl}
           alt={room.name}
@@ -17,13 +18,27 @@ export default function RoomDetailsModal({ room, onClose }) {
         />
 
         <h2 className="my-4 text-2xl font-bold">{room.name}</h2>
-        <p><strong>Stadt:</strong> {room.city}</p>
-        <p><strong>Wohnfläche:</strong> {room.squareMeters} m²</p>
-        <p><strong>Miete:</strong> {room.pricePerMonth} €</p>
-        <p><strong>Verfügbarkeit:</strong> {room.availability}</p>
-        <p><strong>Bundesland:</strong> {room.state}</p>
-        <p><strong>Adresse:</strong> {room.address}</p>
-        <p><strong>Beschreibung:</strong> {room.description}</p>
+        <p>
+          <strong>Stadt:</strong> {room.city}
+        </p>
+        <p>
+          <strong>Wohnfläche:</strong> {room.squareMeters} m²
+        </p>
+        <p>
+          <strong>Miete:</strong> {room.pricePerMonth} €
+        </p>
+        <p>
+          <strong>Verfügbarkeit:</strong> {room.availability}
+        </p>
+        <p>
+          <strong>Bundesland:</strong> {room.state}
+        </p>
+        <p>
+          <strong>Adresse:</strong> {room.address}
+        </p>
+        <p>
+          <strong>Beschreibung:</strong> {room.description}
+        </p>
 
         {!showContactForm && (
           <div className="mt-4 flex space-x-4">
